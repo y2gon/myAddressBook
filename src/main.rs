@@ -198,7 +198,7 @@ fn main() {
         let stdin = io::stdin().read_line(&mut orderNumber).expect("typing error");
         if orderNumber.len() != 3
         {
-            println!("Please enter one character among the avaiable value (1 - 6, q).");
+            println!("Please enter one character among the vaild keys (1 - 6, q).");
         }
         else 
         {
@@ -235,7 +235,7 @@ fn main() {
             }
             else 
             {
-                println!("Please enter the avaiable value (1 - 6, q).");
+                println!("Please enter the valid key (1 - 6, q).");
             }
         }
     }
