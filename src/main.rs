@@ -191,52 +191,39 @@ fn main() {
         println!("4. Remove one memorized personal information.");
         println!("5. Load the address record from a file.");
         println!("6. Save the added address record to a file.");
-        println!("Please enter 'q' if you want to quit this program.");
+        println!("Please enter '0' if you want to quit this program.");
         println!("-----------------------------------------------------------------");
 
-        let mut orderNumber = String::new();
-        let stdin = io::stdin().read_line(&mut orderNumber).expect("typing error");
-        if orderNumber.len() != 3
-        {
-            println!("Please enter one character among the vaild keys (1 - 6, q).");
-        }
-        else 
-        {
-            orderNumber = orderNumber[..1].to_string();
-            
-            if orderNumber == "1"  // input a new personal infomation. 
-            {
-                group1.addPersonalInfo();
-            }
-            else if orderNumber == "2" // Search one memorized personal information.
-            {
-                group1.searchingPersonalInfo();
-            }
-            else if orderNumber == "3" // Check the all memorized personal information.
-            {
-                group1.showGroupInfo();
-            }
-            else if orderNumber == "4" // Remove one memorized personal information.
-            {
-                group1.removePersonalInfo();
-            }
-            else if orderNumber == "5" // Load the address record from a file.
-            {
-                group1.loadGroupInfoFromFile(fileName);
-            }
-            else if orderNumber == "6" // Save the added address record to a file.
-            {
-                group1.addGroupInfoToFile(fileName);
-            }
-            else if orderNumber == "q" // quit this program.
-            {
-                println!("Bye!!"); 
-                break;  
-            }
-            else 
-            {
-                println!("Please enter the valid key (1 - 6, q).");
-            }
-        }
+        let mut order = String::new();
+        let stdInput = io::stdin().read_line(&mut order);
+        let stdInput = match stdInput{
+            Err(error) => panic!("There was a problem: {:?}", error),
+            Ok(inputSize) => {
+                if inputSize > 3 
+                {
+                    println!("Please enter one vaild number (0 - 6).");
+                }
+                else
+                {
+                    let orderNumber = order[..1].parse::<u8>();
+                    match orderNumber{
+                        Err(error) => println!("Please enter one vaild number (0 - 6)."),
+                        Ok(orderNumber) => match orderNumber{
+                            1 => group1.addPersonalInfo(),          // input a new personal infomation. 
+                            2 => group1.searchingPersonalInfo(),    // Search one memorized personal information.
+                            3 => group1.showGroupInfo(),            // Check the all memorized personal information.
+                            4 => group1.removePersonalInfo(),       // Remove one memorized personal information.
+                            5 => group1.loadGroupInfoFromFile(fileName), // Load the address record from a file.
+                            6 => group1.addGroupInfoToFile(fileName),    // Save the added address record to a file.
+                            0 => {                                       // quit this program.
+                                    println!("Bye!!"); 
+                                    break;  
+                            },
+                            _ => println!("Please enter one vaild number (0 - 6)."),
+                        }
+                    }
+                }
+            },
+        };
     }
 }
