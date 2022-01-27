@@ -196,7 +196,7 @@ fn main() {
 
         let mut order = String::new();
         let stdInput = io::stdin().read_line(&mut order);
-        let stdInput = match stdInput{
+        match stdInput{
             Err(error) => panic!("There was a problem: {:?}", error),
             Ok(inputSize) => {
                 if inputSize > 3 
@@ -220,8 +220,8 @@ fn main() {
                                     break;  
                             },
                             _ => println!("Please enter one vaild number (0 - 6)."),
-                        }
-                    }
+                        },
+                    };
                 }
             },
         };
